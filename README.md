@@ -1,96 +1,27 @@
-# Course Learning docker / docker-compose
+# ТЕМПЛЕЙТ ПРОЄКТУ
 
-### (Nginx, MySQL, React, Symfony)
+### Після клонування потрібно буде спочатку видалити старі волюми mysql:
+* Зупиняємо всі контейнери `docker stop $(docker ps -aq)`
+* Видаляємо всі контейнери `docker rm $(docker ps -aq)`
+* Отримуємо список волюмів `docker volume ls`
+* Видаляємо всі mysql волюми які стосуються поточного і минулих проєктів, тобто всі курслаби, всі докерльорнінги, все що виглядає як наслідки `docker volume rm НазваВолюма`
+* Виконуємо ребілд проєкту `./local_recreate_docker.sh`
+* Якщо в результаті білда виникне помилка з нетворками, видаляємо їх і повторно виконуємо ребілд `docker network prune` (запитає підтвердження)
 
-Configure docker to up container.
+### Після успішного першого білда потрібно ініціалізувати проєкт symfony (тому що var i vendor не пушаться)
+Для цього:
+* Заходимо в контейнер арі `docker compose exec api sh`
+* Виконуємо інсталяцію необхідних пакетів `composer install`
+* По завершенню процедури, в разі успіху виходимо з контейнеру `exit`
+* В ручному режимі в директорії арі створюємо файл .env.local
 
+### Тепер необхідно зареєструвати хост проєкту. Для цього:
+* Переходимо в провіднику в директорію `etc/`
+* Відкриваємо в редакторі файл `hosts`
+* Додаємо до переліку хостів `healthy.ua` у відповідність до `127.0.0.1` (аналогічно до localhost)
+* Зберігаємо файл (можливо виникне помилка через відсутність прав, в такому випадку просто даємо права на цей файл через `chmod`)
 
-## Getting Started
-
-These instructions will cover usage information and for the docker container
-
-## Prerequisities
-
-In order to run this container you'll need docker installed.
-
-* [Linux](https://docs.docker.com/linux/started/)
-
-
-
-## Usage (Scripts)
-
-Stop, delete all containers and recreate this in `local` version
-
-```shell
-./local_recreate_docker.sh
-```
-
-
-## Usage (Detailed)
-
-Build container in `local` version in the background
-
-```shell
-docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up
-```
-
-
-
-## Configure file `hosts` to start container in local domain
-
-```text
-# local domains for production and development
-127.0.0.1 healthy.ua
-# etc...
-```
-
-#### Symfony .env.local configuration
-
-Database configuration
-
-```text
-DATABASE_URL=mysql://healthy-user:rj7Ebp9yDr@172.22.75.8:3306/healthy?serverVersion=5.7
-```
-
-#### Show logs
-
-For FRONTEND container use:
-```text
-docker-compose logs -f --tail 50 frontend
-```
-
-For API container use:
-```text
-docker-compose logs -f --tail 50 api
-```
-
-For NGINX container use:
-```text
-docker-compose logs -f --tail 50 nginx
-```
-
-#### Execute containers
-
-For FRONTEND container use:
-```text
-docker-compose exec frontend sh
-```
-
-For API container use:
-```text
-docker-compose exec api sh
-```
-
-For NGINX container use:
-```text
-docker-compose exec nginx sh
-```
-
-
-#### In browser
-
-PhpMyAdmin & MySQL database only work in `local` version. Don't forget to start container.
-
-* [Main page (ReactJS)](https://healthy.ua)
-* [Main page (Symfony)](https://healthy.ua/api)
-* [PhpMyAdmin](https://healthy.ua:8443)
+### Робимо ще один тестовий ребілд, і в разі успіху ми маємо отримати придатний для роботи темплейт:
+* За адресою [healthy.ua](https://healthy.ua) має бути доступний стандартний додаток React
+* За адреcою [healthy.ua/api](https://healthy.ua/api) має бути ексепшн «No route found…»
+* За адресою [healthy.ua:8443](https://healthy.ua:8443) має бути доступний phpmyadmin
