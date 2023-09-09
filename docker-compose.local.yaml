@@ -16,7 +16,7 @@ services:
 #    depends_on:
 #      - mysql
     networks:
-      courselab:
+      healthy:
         ipv4_address: ${API_IPV4}
 
   frontend:
@@ -65,7 +65,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     hostname: mysql.docker
     networks:
-      courselab:
+      healthy:
         ipv4_address: ${MYSQL_IPV4}
 
   phpmyadmin:
@@ -84,7 +84,7 @@ services:
       MYSQL_PASSWORD: ${PHPMYADMIN_MYSQL_PASSWORD}
       UPLOAD_LIMIT: 20M
     networks:
-      courselab:
+      healthy:
         ipv4_address: ${PHPMYADMIN_IPV4}
 
 volumes:

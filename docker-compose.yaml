@@ -15,7 +15,7 @@ services:
     build: ./frontend
     container_name: ${PROJECT_NAME}-frontend
     networks:
-      courselab:
+      healthy:
         ipv4_address: ${FRONTEND_IPV4}
 
   nginx:
@@ -31,7 +31,7 @@ services:
       FRONTEND_DIRECTORY: ${FRONTEND_DIRECTORY}
       API_DIRECTORY: ${API_DIRECTORY}
     networks:
-      courselab:
+      healthy:
         ipv4_address: ${NGINX_IPV4}
 
 
@@ -41,7 +41,7 @@ volumes:
   data:
 
 networks:
-  courselab:
+  healthy:
     driver: "bridge"
     ipam:
       driver: default

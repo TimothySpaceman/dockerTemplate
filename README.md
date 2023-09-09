@@ -40,7 +40,7 @@ docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up
 
 ```text
 # local domains for production and development
-127.0.0.1 courselab.com
+127.0.0.1 healthy.ua
 # etc...
 ```
 
@@ -49,7 +49,7 @@ docker-compose -f docker-compose.yaml -f docker-compose.local.yaml up
 Database configuration
 
 ```text
-DATABASE_URL=mysql://courselab-user:123456@172.22.75.8:3306/courselab?serverVersion=5.7
+DATABASE_URL=mysql://healthy-user:rj7Ebp9yDr@172.22.75.8:3306/healthy?serverVersion=5.7
 ```
 
 #### Show logs
@@ -91,6 +91,6 @@ docker-compose exec nginx sh
 
 PhpMyAdmin & MySQL database only work in `local` version. Don't forget to start container.
 
-* [Main page (ReactJS)](https://courselab.com)
-* [Main page (Symfony)](https://courselab.com/api)
-* [PhpMyAdmin](https://courselab.com:8443)
+* [Main page (ReactJS)](https://healthy.ua)
+* [Main page (Symfony)](https://healthy.ua/api)
+* [PhpMyAdmin](https://healthy.ua:8443)

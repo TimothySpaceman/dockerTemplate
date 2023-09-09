@@ -1,7 +1,7 @@
 ARG NODE_VERSION=14.20.0
 FROM node:${NODE_VERSION}-alpine3.16
 
-WORKDIR /var/www/courselab/frontend
+WORKDIR /var/www/healthy/frontend
 
 COPY package*.json ./
 
